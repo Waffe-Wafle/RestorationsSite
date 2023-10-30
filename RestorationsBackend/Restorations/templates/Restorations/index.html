@@ -21,11 +21,11 @@
         <a class="accept-button">
             <div>Open</div>
         </a>
-<!--        <form method="post">-->
-<!--            {% csrf_token %}-->
-<!--            <input style="display: none" name="delete" value="{{ restore.id }}">-->
-<!--            <button type="submit" class="delete">delete</button>-->
-<!--        </form>-->
+        <form method="post">
+            {% csrf_token %}
+            <input style="display: none" name="delete" value="{{ restore.id }}">
+            <button type="submit" class="delete">delete</button>
+        </form>
     </div>
 </div>
 {% endfor %}

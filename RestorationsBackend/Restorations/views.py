@@ -7,12 +7,12 @@ import psycopg2
 from Site.settings import CONFIG, MEDIA_ROOT, MONEY_SYMBOL
 
 
-# conn = psycopg2.connect(dbname=  CONFIG.get('Postgres DB', 'name'),
-#                         user=    CONFIG.get('Postgres DB', 'user'),
-#                         password=CONFIG.get('Postgres DB', 'password'),
-#                         host=    CONFIG.get('Postgres DB', 'host'),
-#                         port=    CONFIG.get('Postgres DB', 'port'))
-# conn.set_isolation_level(0)
+conn = psycopg2.connect(dbname=  CONFIG.get('Postgres DB', 'name'),
+                        user=    CONFIG.get('Postgres DB', 'user'),
+                        password=CONFIG.get('Postgres DB', 'password'),
+                        host=    CONFIG.get('Postgres DB', 'host'),
+                        port=    CONFIG.get('Postgres DB', 'port'))
+conn.set_isolation_level(0)
 
 
 def serialise_restore_works(objects_list, is_card_view=False):
@@ -41,14 +41,15 @@ def serialise_restore_works(objects_list, is_card_view=False):
 
 def cards_view(request):
     # Deletion processing:
-    # restore_id = request.POST.get('delete')
-    # if restore_id:
-    #     with conn.cursor() as curs:
-    #         curs.execute(f'DELETE FROM "RestoreWorks" WHERE "restore_ID" = {restore_id}')
+    restore_id = request.POST.get('delete')
+    if restore_id:
+        with conn.cursor() as curs:
+            curs.execute(f'DELETE FROM "RestoreWorks" WHERE "restore_ID" = {restore_id}')
 
     # Search filter processing:
     restore_objects = RestoreWork.objects.all()
-    search = request.GET.get('search')
+    # search = request.GET.get('search')
+    search = request.POST.get('search')
     search =  unquote(search) if search else None
     if search:
         restore_objects = restore_objects.filter(name__iregex=search) | \

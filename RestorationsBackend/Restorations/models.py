@@ -3,6 +3,12 @@ from Site.settings import MONEY_SYMBOL
 from django.core.validators import MinValueValidator, ValidationError
 
 
+def donation_status_validate(value):
+    STATUS = ['formed', 'rejected', 'completed', 'deleted']
+    if value not in STATUS:
+        raise ValidationError(f"Status shoulde be one of {STATUS}")
+
+
 def restoration_status_validate(value):
     STATUS = ['actual', 'deleted']
     if value not in STATUS:
@@ -19,12 +25,12 @@ class RestoreWork(models.Model):
     total_sum = models.IntegerField(validators=[
         MinValueValidator(1)
     ])
-    status = models.CharField(max_length=7, validators=[
+    status = models.CharField(validators=[
         restoration_status_validate
     ])
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'RestoreWorks'
 
     def __str__(self):
@@ -41,7 +47,7 @@ class Donater(models.Model):
     bio = models.TextField(db_column='description', blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'Donaters'
 
     def __str__(self):
@@ -50,16 +56,21 @@ class Donater(models.Model):
 
 class Donation(models.Model):
     donation_id = models.BigAutoField(db_column='donation_ID', primary_key=True)
-    restore_id = models.ForeignKey(RestoreWork, models.CASCADE, db_column='restore_ID')
+    restore_id = models.ForeignKey(RestoreWork, models.DO_NOTHING, db_column='restore_ID')
     donater_id = models.ForeignKey(Donater, models.DO_NOTHING, db_column='donater_ID')
     sum = models.IntegerField(validators=[
         MinValueValidator(1)
     ])
     card_number = models.BigIntegerField()
     payment_time = models.TimeField(blank=True, null=True)
+    submission_time_field = models.DateTimeField(db_column='submission_time')
+    confirmation_time = models.TimeField(blank=True, null=True)
+    status = models.CharField(max_length=11, validators=[
+        donation_status_validate
+    ])
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'Donations'
 
     def __str__(self):

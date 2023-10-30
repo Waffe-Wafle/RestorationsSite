@@ -20,7 +20,7 @@ def serialise_restore_works(objects_list, is_card_view=False):
         raise Http404()
     restore_list = []
     for restore in objects_list:
-        given_summ = Donation.objects.filter(restore_id=restore.restore_id) \
+        given_summ = Donation.objects.filter(restorework__restore_id=restore.restore_id) \
                  .aggregate(sum=Sum('sum'))['sum']
         restore_list.append(
             {'id': restore.restore_id,
@@ -81,12 +81,12 @@ def cards_view(request):
 def card_view(request, restore_id):
     restore = serialise_restore_works(RestoreWork.objects.filter(restore_id=restore_id),
                                       is_card_view=True)[0]  # Comment to use mock
-    donaters_objects = Donater.objects.filter(donation__restore_id=restore_id)
+    donaters_objects = Donater.objects.filter(donation__restorework__restore_id=restore_id)
 
     donaters_list = []
     for donater in donaters_objects:
         sum = Donation.objects.filter(donater_id=donater.donater_id) \
-            .filter(restore_id=restore_id) \
+            .filter(restorework__restore_id=restore_id) \
             .aggregate(sum=Sum('sum'))['sum']
         donaters_list.append(
             {'name': donater.name,

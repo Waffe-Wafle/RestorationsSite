@@ -18,6 +18,7 @@ def restoration_status_validate(value):
 # Dfault blank and null are false.
 class RestoreWork(models.Model):
     restore_id = models.BigAutoField(db_column='restore_ID', primary_key=True)
+    donations = models.ManyToManyField('Donation', through='RestorationRestore')
     name = models.CharField(max_length=70)
     description = models.TextField(blank=True, null=True)
     image = models.ImageField(blank=True, null=True)
@@ -33,14 +34,16 @@ class RestoreWork(models.Model):
         managed = False
         db_table = 'RestoreWorks'
 
+    # def __str__(self):
+    #     got_sum = self.donations.aggregate(sum=models.Sum('sum'))['sum']
+    #     return f'{self.name} ({got_sum if got_sum else 0} / {self.total_sum}) ' + MONEY_SYMBOL
     def __str__(self):
-        got_sum = Donation.objects.filter(restore_id=self.restore_id).aggregate(sum=models.Sum('sum'))['sum']
-        return f'{self.name} ({got_sum if got_sum else 0} / {self.total_sum}) ' + MONEY_SYMBOL
+        return self.name
 
 
 class Donater(models.Model):
     donater_id = models.BigAutoField(db_column='donater_ID', primary_key=True)
-    login = models.CharField(unique=True, max_length=5, )
+    login = models.CharField(unique=True, max_length=50, )
     password = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=50, blank=True, null=True)
@@ -56,7 +59,6 @@ class Donater(models.Model):
 
 class Donation(models.Model):
     donation_id = models.BigAutoField(db_column='donation_ID', primary_key=True)
-    restore_id = models.ForeignKey(RestoreWork, models.DO_NOTHING, db_column='restore_ID')
     donater_id = models.ForeignKey(Donater, models.DO_NOTHING, db_column='donater_ID')
     sum = models.IntegerField(validators=[
         MinValueValidator(1)
@@ -73,10 +75,16 @@ class Donation(models.Model):
         managed = False
         db_table = 'Donations'
 
-    def __str__(self):
-        return f'{Donater.objects.get(donater_id=self.donater_id_id).login}: {self.sum}' + MONEY_SYMBOL \
-             + f' -> {RestoreWork.objects.get(restore_id=self.restore_id_id).name}'
+    # def __str__(self):
+    #     return f'{Donater.objects.get(donater_id=self.donater_id_id).login}: {self.sum}' + MONEY_SYMBOL \
+    #          + f' -> {self.restorework_set.first().name}'
 
 
+class RestorationRestore(models.Model):
+    restore_ID = models.ForeignKey(RestoreWork, on_delete=models.CASCADE)
+    donation_ID = models.ForeignKey(Donation, on_delete=models.DO_NOTHING)
 
+    class Meta:
+        managed = False
+        db_table = 'RestorationRestore'
 

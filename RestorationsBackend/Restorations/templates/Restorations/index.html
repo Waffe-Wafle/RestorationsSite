@@ -30,33 +30,3 @@
 </div>
 {% endfor %}
 {% endblock %}
-
-
-<!--<div class="board">-->
-<!--&lt;!&ndash;        <form id="ammount" method="post">&ndash;&gt;-->
-<!--&lt;!&ndash;            {% csrf_token %}&ndash;&gt;-->
-<!--&lt;!&ndash;            <label><span>Введите число отображаемых записей:</span></label>&ndash;&gt;-->
-<!--&lt;!&ndash;            <input class="input" name="ammount" type="text">&ndash;&gt;-->
-<!--&lt;!&ndash;            <input class="submit" type="submit" value="Submit" >&ndash;&gt;-->
-<!--&lt;!&ndash;        </form>&ndash;&gt;-->
-
-<!--&lt;!&ndash;     {% for restore_id in restore_list %}&ndash;&gt;-->
-<!--&lt;!&ndash;        <div class="card" onclick="location='{% url 'restorations:card' restore_id.id %}';">&ndash;&gt;-->
-<!--&lt;!&ndash;            <img class="soft" src = "{{ restore_id.image }}"&ndash;&gt;-->
-<!--&lt;!&ndash;                 onerror="this.src='{% static 'Restorations/src/card_img_placeholder.jpg' %}'">&ndash;&gt;-->
-<!--&lt;!&ndash;            <p class="title">{{ restore_id.name }}</p>&ndash;&gt;-->
-<!--&lt;!&ndash;            <p class="license">Собрано: <span>{{ restore_id.given_sum }} / {{ restore_id.total_sum }}</span></p>&ndash;&gt;-->
-
-<!--&lt;!&ndash;            <div class="download">&ndash;&gt;-->
-<!--&lt;!&ndash;                <img src="{% static 'Restorations/src/download.svg' %}">&ndash;&gt;-->
-<!--&lt;!&ndash;                <pre> Просмотреть</pre>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            <form method="post">&ndash;&gt;-->
-<!--&lt;!&ndash;                {% csrf_token %}&ndash;&gt;-->
-<!--&lt;!&ndash;                <input name="delete" value="{{ restore_id.id }}">&ndash;&gt;-->
-<!--&lt;!&ndash;                <button type="submit" class="delete">delete</button>&ndash;&gt;-->
-<!--&lt;!&ndash;            </form>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;    {% endfor %}&ndash;&gt;-->
-<!--    -->
-<!--</div>-->

@@ -2,3 +2,4 @@
 logs/*
 media/*
 venv/
+__pycache__/*

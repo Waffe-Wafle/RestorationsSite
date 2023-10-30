@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'Restorations/css/globals.css' %}"/>
+    <link rel="stylesheet" href="{% static 'Restorations/css/styleguide.css'%}"/>
+    <link rel="stylesheet" href="{% static 'Restorations/css/main_window_style.css'%}"/>
+    <link rel="stylesheet" href="{% static 'Restorations/css/card_window_style.css'%}"/>
+    <script defer type="application/javascript" src="{% static 'Restorations/js/search.js' %}"></script>
+    <title>Restorations</title>
+</head>
+<body>
+<div class="desktop">
+    <div class="navbar">
+        <div class="site-title-container">
+          <img class="logo" src="{% static 'Restorations/src/site_logo.png' %}"/>
+                <div class="site-title-wrap">
+                    <p class="main-site-title">Donations for Restorations</p>
+                    <p class="sub-site-title">Help to save your culture objects</p>
+                </div>
+        </div>
+        <input class="search-input" id="nav_search" name="search" type="text" placeholder="Search... ">
+        <img class="search-lope" src="{% static 'Restorations/src/search_lope.svg' %}"/>
+        <div class="hamburger-menu"><img class="menu-icon" src="{% static 'Restorations/src/hamburger_menu.svg' %}"/></div>
+    </div>
+    <div class="content">
+        {% block body %} {% endblock %}
+    </div>
+</div>
+</body>
+</html>

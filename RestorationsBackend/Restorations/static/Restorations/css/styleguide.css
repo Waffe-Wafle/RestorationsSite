@@ -1,0 +1,30 @@
+:root {
+  --defaultblack: rgba(21, 37, 54, 1);
+  --defaultwhite: rgba(255, 255, 255, 1);
+  --primarycolor: rgba(119, 73, 248, 1);
+  --liquid-white: #ffffffb2;
+  /* For borders*/
+  --gray-400: rgba(206, 212, 218, 1);
+  /* For light text*/
+  --gray-500: rgb(158, 158, 158);
+  /* For black text*/
+  --gray-800: rgb(66, 66, 66);
+
+  --all-text-font-family: "Inter-SemiBold", Helvetica;
+  --all-text-font-weight: 400;
+
+  /* Site tittle */
+  --site-title-font-weight: 700;
+  --site-title-font-size: 28px;
+
+  /* Other titles */
+
+  --text-title-font-size: 20px;
+
+  /* Usual font */
+  --text-font-size: 16px ;
+}
+
+
+
+
